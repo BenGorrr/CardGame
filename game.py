@@ -2,6 +2,7 @@ from player import Player
 from card import Card
 from config import *
 import random
+from operator import attrgetter
 
 def main():
     #Init var
@@ -28,8 +29,16 @@ def main():
 
     input("Press ENTER to start.")
 
-    #3 rounds
-    for round in range(1, 4):
+    #Phase-1 3-rounds
+    startGame(players, 3)
+    print(f"\n\n***** {players[0].name} and {players[1].name} proceed to 2-Player phase *****")
+
+    #Phase-2 4-rounds
+    startGame(players, 4)
+    print(f"***** {players[0].name} is the WINNER! *****")
+
+def startGame(players, round):
+    for round in range(1, round+1):
         print(f'\n\n*** ROUND {round} ***')
         print("Cards at Hand:")
         #print(max([player.toPoints(player.cards[:5]) for player in players]))
@@ -50,8 +59,7 @@ def main():
             p.cards = p.cards[5:]
         printAvailableCards(players)
 
-def startGame(players, round):
-    pass
+    players.remove(min(players, key=attrgetter('score')))
 
 def printAvailableCards(players):
     print("\nAvailable Cards:")
