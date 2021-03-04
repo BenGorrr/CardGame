@@ -33,7 +33,7 @@ def main():
     print(f"\n\n***** {players[0].name} and {players[1].name} proceed to 2-Player phase *****")
 
     input("Press ENTER to enter Phase-2.")
-    print("******************")
+    print("\n******************")
     print("* 2-Player Phase *")
     print("******************")
     #Phase-2 4-rounds
@@ -45,7 +45,7 @@ def main():
 
     printAvailableCards(players)
     startGame(players, 4)
-    print(f"***** {players[0].name} is the WINNER! *****")
+    print(f"\n***** {players[0].name} is the WINNER! *****")
 
 def startGame(players, rounds):
     for round in range(1, rounds+1):
