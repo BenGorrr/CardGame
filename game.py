@@ -18,27 +18,37 @@ def main():
     for i in range(3):
         name = input(f"Enter player {i+1} name: ")
         if i == 0:
-            p = Player(name, cards[0:18])
+            p = Player(name, cards[:18])
             cards = cards[18:]
         else:
-            p = Player(name, cards[0:17])
+            p = Player(name, cards[:17])
             cards = cards[17:]
         players.append(p)
 
     printAvailableCards(players)
-
     input("Press ENTER to start.")
 
     #Phase-1 3-rounds
     startGame(players, 3)
     print(f"\n\n***** {players[0].name} and {players[1].name} proceed to 2-Player phase *****")
 
+    input("Press ENTER to enter Phase-2.")
+    print("******************")
+    print("* 2-Player Phase *")
+    print("******************")
     #Phase-2 4-rounds
+    cards = create_deck() #create 52 cards
+    random.shuffle(cards)
+    for p in players:
+        p.cards = cards[:26]
+        cards = cards[26:]
+
+    printAvailableCards(players)
     startGame(players, 4)
     print(f"***** {players[0].name} is the WINNER! *****")
 
-def startGame(players, round):
-    for round in range(1, round+1):
+def startGame(players, rounds):
+    for round in range(1, rounds+1):
         print(f'\n\n*** ROUND {round} ***')
         print("Cards at Hand:")
         #print(max([player.toPoints(player.cards[:5]) for player in players]))
@@ -53,7 +63,9 @@ def startGame(players, round):
         for p in round_players:
             print(f"{p[0].name}\t= {p[0].score}")
 
-        input("\nPress ENTER to next round.")
+        #If current round is not the last round
+        if round != rounds: input("\nPress ENTER to next round.")
+
         #before round end remove first 5 cards from all players
         for p in players:
             p.cards = p.cards[5:]
